@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block title %}برخه اضافه کړئ{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-plus-circle"></i> برخه اضافه کړئ</h2>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="POST" class="row g-3">
+            {% csrf_token %}
+            <div class="col-md-6">
+                <label class="form-label">پوهنځی</label>
+                {{ form.faculty }}
+            </div>
+            <div class="col-md-6">
+                <label class="form-label">د برخې نوم</label>
+                {{ form.department_name }}
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save"></i> Save
+                </button>
+                <a href="{% url 'department_list' %}" class="btn btn-secondary">بیرته</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

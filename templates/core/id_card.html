@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ps" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ID Card - {{ student.name }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+            body { margin: 0; padding: 0; }
+            .id-card { border: 2px solid #000; page-break-inside: avoid; }
+        }
+        body { background: #f5f5f5; padding: 20px; }
+        .id-card {
+            width: 350px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            overflow: hidden;
+            margin: 0 auto;
+        }
+        .id-card-header {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        .id-card-header h4 { margin: 0; font-size: 18px; }
+        .id-card-header p { margin: 5px 0 0; font-size: 12px; opacity: 0.8; }
+        .id-card-body { padding: 20px; }
+        .student-photo {
+            width: 120px;
+            height: 140px;
+            object-fit: cover;
+            border: 3px solid #1a1a2e;
+            border-radius: 8px;
+            margin: 0 auto 15px;
+            display: block;
+        }
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .info-row:last-child { border-bottom: none; }
+        .info-label { font-weight: bold; color: #666; font-size: 13px; }
+        .info-value { color: #333; font-size: 13px; text-align: left; }
+        .card-number {
+            background: #e94560;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .btn-print {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 30px;
+        }
+    </style>
+</head>
+<body>
+    <div class="id-card">
+        <div class="id-card-header">
+            <h4>کندهار پوهنتون</h4>
+            <p>Kandahar University</p>
+            <p style="margin-top:5px;font-size:11px;">د خواب مدیریت سیستم</p>
+        </div>
+        
+        <div class="id-card-body">
+            {% if student.photo %}
+            <img src="{{ student.photo.url }}" alt="{{ student.name }}" class="student-photo">
+            {% else %}
+            <div class="student-photo bg-secondary d-flex align-items-center justify-content-center">
+                <i class="bi bi-person text-white" style="font-size: 60px;"></i>
+            </div>
+            {% endif %}
+            
+            <div class="card-number">{{ student.card_number }}</div>
+            
+            <div class="info-row">
+                <span class="info-label">نوم:</span>
+                <span class="info-value">{{ student.name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">د پلار نوم:</span>
+                <span class="info-value">{{ student.father_name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">ولایت:</span>
+                <span class="info-value">{{ student.province }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">ولسوالۍ:</span>
+                <span class="info-value">{{ student.district }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">پوهنځی:</span>
+                <span class="info-value">{{ student.faculty.faculty_name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">برخه:</span>
+                <span class="info-value">{{ student.department.department_name }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">کلاس:</span>
+                <span class="info-value">{{ student.class_level }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">خواب:</span>
+                <span class="info-value">{{ student.dorm.dorm_name|default:"-" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">اطاق:</span>
+                <span class="info-value">{{ student.room.room_number|default:"-" }}</span>
+            </div>
+            <div class="info-row">
+                <span class="info-label">د داخلې کال:</span>
+                <span class="info-value">{{ student.admission_year }}</span>
+            </div>
+        </div>
+    </div>
+    
+    <button onclick="window.print()" class="btn btn-primary btn-print no-print">
+        <i class="bi bi-printer"></i> Print ID Card
+    </button>
+    
+    <a href="{% url 'student_list' %}" class="btn btn-secondary btn-print no-print">
+        <i class="bi bi-arrow-right"></i> بیرته
+    </a>
+</body>
+</html>

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}اطاق اضافه کړئ{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-plus-circle"></i> اطاق اضافه کړئ</h2>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="POST" class="row g-3">
+            {% csrf_token %}
+            <div class="col-md-4">
+                <label class="form-label">د اطاق نمبر</label>
+                {{ form.room_number }}
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">خواب</label>
+                {{ form.dorm }}
+            </div>
+            <div class="col-md-4">
+                <label class="form-label">ظرفیت</label>
+                {{ form.capacity }}
+            </div>
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save"></i> Save
+                </button>
+                <a href="{% url 'room_list' %}" class="btn btn-secondary">بیرته</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

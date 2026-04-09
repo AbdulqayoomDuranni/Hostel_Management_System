@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+
+{% block title %}زده کوونکي{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-people"></i> زده کوونکي</h2>
+    <a href="{% url 'add_student' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> زده کوونکی اضافه کړئ
+    </a>
+</div>
+
+<div class="card mb-4">
+    <div class="card-body">
+        <form method="GET" class="row g-3">
+            <div class="col-md-3">
+                <input type="text" name="q" class="form-control" placeholder="پل.search..." value="{{ search_query }}">
+            </div>
+            <div class="col-md-2">
+                <select name="faculty" class="form-select">
+                    <option value="">ټول پوهنځي</option>
+                    {% for faculty in faculties %}
+                    <option value="{{ faculty.id }}" {% if request.GET.faculty == faculty.id|stringformat:"s" %}selected{% endif %}>
+                        {{ faculty.faculty_name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select name="dorm" class="form-select">
+                    <option value="">ټول خوابونه</option>
+                    {% for dorm in dorms %}
+                    <option value="{{ dorm.id }}" {% if request.GET.dorm == dorm.id|stringformat:"s" %}selected{% endif %}>
+                        {{ dorm.dorm_name }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-2">
+                <select name="year" class="form-select">
+                    <option value="">ټول کالونه</option>
+                    {% for year in years %}
+                    <option value="{{ year }}" {% if request.GET.year == year %}selected{% endif %}>
+                        {{ year }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-search"></i> Search
+                </button>
+                <a href="{% url 'student_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-primary">
+                    <tr>
+                        <th>#</th>
+                        <th>تصویر</th>
+                        <th>نوم</th>
+                        <th>د پلار نوم</th>
+                        <th>پوهنځی</th>
+                        <th>برخه</th>
+                        <th>خواب</th>
+                        <th>اطاق</th>
+                        <th>د کارت نمبر</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in page_obj %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>
+                            {% if student.photo %}
+                            <img src="{{ student.photo.url }}" width="40" height="40" class="rounded-circle object-fit-cover">
+                            {% else %}
+                            <div class="bg-secondary rounded-circle d-flex align-items-center justify-content-center" style="width:40px;height:40px;">
+                                <i class="bi bi-person text-white"></i>
+                            </div>
+                            {% endif %}
+                        </td>
+                        <td>{{ student.name }}</td>
+                        <td>{{ student.father_name }}</td>
+                        <td>{{ student.faculty.faculty_name }}</td>
+                        <td>{{ student.department.department_name }}</td>
+                        <td>{{ student.dorm.dorm_name|default:"-" }}</td>
+                        <td>{{ student.room.room_number|default:"-" }}</td>
+                        <td>{{ student.card_number }}</td>
+                        <td>
+                            <a href="{% url 'id_card' student.pk %}" class="btn btn-sm btn-info" title="ID Card">
+                                <i class="bi bi-person-badge"></i>
+                            </a>
+                            <a href="{% url 'edit_student' student.pk %}" class="btn btn-sm btn-warning" title="Edit">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ student.pk }}">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <div class="modal fade" id="deleteModal{{ student.pk }}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">تائید حذف</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>آیا تاسو میخواهید {{ student.name }} حذف کنید؟</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لغو</button>
+                                    <form action="{% url 'delete_student' student.pk %}" method="POST" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">حذف</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <tr>
+                        <td colspan="10" class="text-center text-muted py-4">زده کوونکي شتون نلري</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    {% if page_obj.has_other_pages %}
+    <div class="card-footer">
+        <nav>
+            <ul class="pagination justify-content-center mb-0">
+                {% if page_obj.has_previous %}
+                <li class="page-item">
+                    <a class="page-link" href="?page=1">لومړی</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}"> مخکی</a>
+                </li>
+                {% endif %}
+                
+                <li class="page-item active">
+                    <span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+                </li>
+                
+                {% if page_obj.has_next %}
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.next_page_number }}">بله</a>
+                </li>
+                <li class="page-item">
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}"> послед </a>
+                </li>
+                {% endif %}
+            </ul>
+        </nav>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    $('#id_faculty').change(function() {
+        var facultyId = $(this).val();
+        if(facultyId) {
+            $.get('/api/get-departments/?faculty_id=' + facultyId, function(data) {
+                $('#id_department').empty();
+                $('#id_department').append('<option value="">Select Department</option>');
+                $.each(data, function(index, dept) {
+                    $('#id_department').append('<option value="' + dept.id + '">' + dept.department_name + '</option>');
+                });
+            });
+        }
+    });
+    
+    $('#id_dorm').change(function() {
+        var dormId = $(this).val();
+        if(dormId) {
+            $.get('/api/get-rooms/?dorm_id=' + dormId, function(data) {
+                $('#id_room').empty();
+                $('#id_room').append('<option value="">Select Room</option>');
+                $.each(data, function(index, room) {
+                    var status = room.is_full ? ' (ډک)' : ' (' + room.current_count + '/' + room.capacity + ')';
+                    $('#id_room').append('<option value="' + room.id + '">' + room.room_number + status + '</option>');
+                });
+            });
+        }
+    });
+});
+</script>
+{% endblock %}

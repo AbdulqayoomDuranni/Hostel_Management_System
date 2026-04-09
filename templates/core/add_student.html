@@ -1,0 +1,163 @@
+{% extends 'base.html' %}
+
+{% block title %}زده کوونکی اضافه کړئ{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-person-plus"></i> زده کوونکی اضافه کړئ</h2>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="POST" enctype="multipart/form-data" class="row g-3">
+            {% csrf_token %}
+            
+            <div class="col-md-6">
+                <label class="form-label">نوم</label>
+                {{ form.name }}
+                {% if form.name.errors %}
+                <div class="text-danger">{{ form.name.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">د پلار نوم</label>
+                {{ form.father_name }}
+                {% if form.father_name.errors %}
+                <div class="text-danger">{{ form.father_name.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">ولایت</label>
+                {{ form.province }}
+                {% if form.province.errors %}
+                <div class="text-danger">{{ form.province.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">ولسوالۍ</label>
+                {{ form.district }}
+                {% if form.district.errors %}
+                <div class="text-danger">{{ form.district.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">پوهنځی</label>
+                {{ form.faculty }}
+                {% if form.faculty.errors %}
+                <div class="text-danger">{{ form.faculty.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">برخه</label>
+                {{ form.department }}
+                {% if form.department.errors %}
+                <div class="text-danger">{{ form.department.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">کلاس</label>
+                {{ form.class_level }}
+                {% if form.class_level.errors %}
+                <div class="text-danger">{{ form.class_level.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">له څه حد څخه (%)</label>
+                {{ form.percentage }}
+                {% if form.percentage.errors %}
+                <div class="text-danger">{{ form.percentage.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">خواب</label>
+                {{ form.dorm }}
+                {% if form.dorm.errors %}
+                <div class="text-danger">{{ form.dorm.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">اطاق</label>
+                {{ form.room }}
+                {% if form.room.errors %}
+                <div class="text-danger">{{ form.room.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">تصویر (JPG/PNG, Max 200KB)</label>
+                {{ form.photo }}
+                {% if form.photo.errors %}
+                <div class="text-danger">{{ form.photo.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">د کارت نمبر</label>
+                {{ form.card_number }}
+                {% if form.card_number.errors %}
+                <div class="text-danger">{{ form.card_number.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">د داخلې کال</label>
+                {{ form.admission_year }}
+                {% if form.admission_year.errors %}
+                <div class="text-danger">{{ form.admission_year.errors }}</div>
+                {% endif %}
+            </div>
+            
+            <div class="col-12">
+                <button type="submit" class="btn btn-primary">
+                    <i class="bi bi-save"></i> Save
+                </button>
+                <a href="{% url 'student_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-right"></i> بیرته
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    $('#id_faculty').change(function() {
+        var facultyId = $(this).val();
+        if(facultyId) {
+            $.get('/api/get-departments/?faculty_id=' + facultyId, function(data) {
+                $('#id_department').empty();
+                $('#id_department').append('<option value="">Select Department</option>');
+                $.each(data, function(index, dept) {
+                    $('#id_department').append('<option value="' + dept.id + '">' + dept.department_name + '</option>');
+                });
+            });
+        }
+    });
+    
+    $('#id_dorm').change(function() {
+        var dormId = $(this).val();
+        if(dormId) {
+            $.get('/api/get-rooms/?dorm_id=' + dormId, function(data) {
+                $('#id_room').empty();
+                $('#id_room').append('<option value="">Select Room</option>');
+                $.each(data, function(index, room) {
+                    var status = room.is_full ? ' (ډک)' : ' (' + room.current_count + '/' + room.capacity + ')';
+                    $('#id_room').append('<option value="' + room.id + '">' + room.room_number + status + '</option>');
+                });
+            });
+        }
+    });
+});
+</script>
+{% endblock %}

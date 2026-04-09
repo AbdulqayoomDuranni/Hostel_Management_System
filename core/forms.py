@@ -1,0 +1,76 @@
+from django import forms
+from .models import Student, Faculty, Department, Dorm, Room
+from django.core.exceptions import ValidationError
+
+class StudentForm(forms.ModelForm):
+    class Meta:
+        model = Student
+        fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'نوم'}),
+            'father_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'د پلار نوم'}),
+            'province': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'ولایت'}),
+            'district': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'ولسوالۍ'}),
+            'faculty': forms.Select(attrs={'class': 'form-select', 'id': 'id_faculty'}),
+            'department': forms.Select(attrs={'class': 'form-select', 'id': 'id_department'}),
+            'class_level': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'کلاس'}),
+            'percentage': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'له څه حد څخه'}),
+            'dorm': forms.Select(attrs={'class': 'form-select', 'id': 'id_dorm'}),
+            'room': forms.Select(attrs={'class': 'form-select', 'id': 'id_room'}),
+            'photo': forms.FileInput(attrs={'class': 'form-control', 'accept': 'image/jpeg,image/png'}),
+            'card_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'د کارت نمبر'}),
+            'admission_year': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'د داخلې کال'}),
+        }
+    
+    def clean_photo(self):
+        photo = self.cleaned_data.get('photo')
+        if photo:
+            if photo.size > 200 * 1024:
+                raise ValidationError('تصویر сли نه تر ۲۰۰ کیلوبایت غواړي!')
+            ext = photo.name.split('.')[-1].lower()
+            if ext not in ['jpg', 'jpeg', 'png']:
+                raise ValidationError('یوازې JPG یا PNG فورمت اجازه لري.')
+        return photo
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        room = cleaned_data.get('room')
+        if room and room.is_full:
+            if not self.instance.pk:
+                raise ValidationError(f"اطاق {room.room_number} ډک دی!")
+        return cleaned_data
+
+class FacultyForm(forms.ModelForm):
+    class Meta:
+        model = Faculty
+        fields = ['faculty_name']
+        widgets = {
+            'faculty_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'د پوهنځی نوم'}),
+        }
+
+class DepartmentForm(forms.ModelForm):
+    class Meta:
+        model = Department
+        fields = ['faculty', 'department_name']
+        widgets = {
+            'faculty': forms.Select(attrs={'class': 'form-select'}),
+            'department_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'د برخې نوم'}),
+        }
+
+class DormForm(forms.ModelForm):
+    class Meta:
+        model = Dorm
+        fields = ['dorm_name']
+        widgets = {
+            'dorm_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'د خواب نوم'}),
+        }
+
+class RoomForm(forms.ModelForm):
+    class Meta:
+        model = Room
+        fields = ['room_number', 'dorm', 'capacity']
+        widgets = {
+            'room_number': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'د اطاق نمبر'}),
+            'dorm': forms.Select(attrs={'class': 'form-select'}),
+            'capacity': forms.NumberInput(attrs={'class': 'form-control', 'value': 4}),
+        }

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}پوهنځي{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-building"></i> پوهنځي</h2>
+    <a href="{% url 'add_faculty' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> پوهنځی اضافه کړئ
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-primary">
+                    <tr>
+                        <th>#</th>
+                        <th>د پوهنځی نوم</th>
+                        <th>زده کوونکي</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for faculty in faculties %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ faculty.faculty_name }}</td>
+                        <td><span class="badge bg-primary">{{ faculty.student_count }}</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ faculty.pk }}">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <div class="modal fade" id="deleteModal{{ faculty.pk }}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">تائید حذف</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>آیا تاسو میخواهید {{ faculty.faculty_name }} حذف کنید؟</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لغو</button>
+                                    <form action="{% url 'delete_faculty' faculty.pk %}" method="POST" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">حذف</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="text-center text-muted py-4">پوهنځي شتون نلري</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

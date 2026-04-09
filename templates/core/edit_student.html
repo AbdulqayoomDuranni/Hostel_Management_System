@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block title %}زده کوونکی کنډل{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-pencil-square"></i> زده کوونکی کنډل</h2>
+</div>
+
+<div class="card">
+    <div class="card-body">
+        <form method="POST" enctype="multipart/form-data" class="row g-3">
+            {% csrf_token %}
+            
+            <div class="col-md-6">
+                <label class="form-label">نوم</label>
+                {{ form.name }}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">د پلار نوم</label>
+                {{ form.father_name }}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">ولایت</label>
+                {{ form.province }}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">ولسوالۍ</label>
+                {{ form.district }}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">پوهنځی</label>
+                {{ form.faculty }}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">برخه</label>
+                {{ form.department }}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">کلاس</label>
+                {{ form.class_level }}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">له څه حد څخه (%)</label>
+                {{ form.percentage }}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">خواب</label>
+                {{ form.dorm }}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">اطاق</label>
+                {{ form.room }}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">تصویر (JPG/PNG, Max 200KB)</label>
+                {{ form.photo }}
+                {% if student.photo %}
+                <img src="{{ student.photo.url }}" width="80" class="mt-2 rounded">
+                {% endif %}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">د کارت نمبر</label>
+                {{ form.card_number }}
+            </div>
+            
+            <div class="col-md-6">
+                <label class="form-label">د داخلې کال</label>
+                {{ form.admission_year }}
+            </div>
+            
+            <div class="col-12">
+                <button type="submit" class="btn btn-success">
+                    <i class="bi bi-save"></i> Update
+                </button>
+                <a href="{% url 'student_list' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-right"></i> بیرته
+                </a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+$(document).ready(function() {
+    var initialFacultyId = '{{ student.faculty.id }}';
+    var initialDormId = '{{ student.dorm.id }}';
+    var initialDeptId = '{{ student.department.id }}';
+    var initialRoomId = '{{ student.room.id }}';
+    
+    $('#id_faculty').change(function() {
+        var facultyId = $(this).val();
+        if(facultyId) {
+            $.get('/api/get-departments/?faculty_id=' + facultyId, function(data) {
+                $('#id_department').empty();
+                $('#id_department').append('<option value="">Select Department</option>');
+                $.each(data, function(index, dept) {
+                    var selected = dept.id == initialDeptId ? ' selected' : '';
+                    $('#id_department').append('<option value="' + dept.id + '"' + selected + '>' + dept.department_name + '</option>');
+                });
+            });
+        }
+    });
+    
+    $('#id_dorm').change(function() {
+        var dormId = $(this).val();
+        if(dormId) {
+            $.get('/api/get-rooms/?dorm_id=' + dormId, function(data) {
+                $('#id_room').empty();
+                $('#id_room').append('<option value="">Select Room</option>');
+                $.each(data, function(index, room) {
+                    var selected = room.id == initialRoomId ? ' selected' : '';
+                    var status = room.is_full ? ' (ډک)' : ' (' + room.current_count + '/' + room.capacity + ')';
+                    $('#id_room').append('<option value="' + room.id + '"' + selected + '>' + room.room_number + status + '</option>');
+                });
+            });
+        }
+    });
+    
+    if(initialFacultyId) {
+        $('#id_faculty').trigger('change');
+    }
+    
+    if(initialDormId) {
+        $('#id_dorm').trigger('change');
+    }
+});
+</script>
+{% endblock %}

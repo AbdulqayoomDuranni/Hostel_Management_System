@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+
+{% block title %}اطاقونه{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-door-open"></i> اطاقونه</h2>
+    <a href="{% url 'add_room' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> اطاق اضافه کړئ
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-info">
+                    <tr>
+                        <th>#</th>
+                        <th>د اطاق نمبر</th>
+                        <th>خواب</th>
+                        <th>ظرفیت</th>
+                        <th>زده کوونکي</th>
+                        <th>وضعیت</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for room in rooms %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ room.room_number }}</td>
+                        <td>{{ room.dorm.dorm_name }}</td>
+                        <td>{{ room.capacity }}</td>
+                        <td>{{ room.student_count }}</td>
+                        <td>
+                            {% if room.is_full %}
+                            <span class="room-full">ډک</span>
+                            {% else %}
+                            <span class="room-available">شته</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ room.pk }}">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <div class="modal fade" id="deleteModal{{ room.pk }}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">تائید حذف</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>آیا تاسو میخواهید اطاق {{ room.room_number }} حذف کنید؟</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لغو</button>
+                                    <form action="{% url 'delete_room' room.pk %}" method="POST" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">حذف</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <tr>
+                        <td colspan="7" class="text-center text-muted py-4">اطاقونه شتون نلري</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

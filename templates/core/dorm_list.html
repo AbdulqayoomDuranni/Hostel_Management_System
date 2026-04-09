@@ -1,0 +1,69 @@
+{% extends 'base.html' %}
+
+{% block title %}خوابونه{% endblock %}
+
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h2><i class="bi bi-house-door"></i> خوابونه</h2>
+    <a href="{% url 'add_dorm' %}" class="btn btn-primary">
+        <i class="bi bi-plus-circle"></i> خواب اضافه کړئ
+    </a>
+</div>
+
+<div class="card">
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-warning">
+                    <tr>
+                        <th>#</th>
+                        <th>د خواب نوم</th>
+                        <th>زده کوونکي</th>
+                        <th>اطاقونه</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for dorm in dorms %}
+                    <tr>
+                        <td>{{ forloop.counter }}</td>
+                        <td>{{ dorm.dorm_name }}</td>
+                        <td><span class="badge bg-warning text-dark">{{ dorm.student_count }}</span></td>
+                        <td><span class="badge bg-info">{{ dorm.room_count }}</span></td>
+                        <td>
+                            <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ dorm.pk }}">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </td>
+                    </tr>
+                    <div class="modal fade" id="deleteModal{{ dorm.pk }}" tabindex="-1">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title">تائید حذف</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <p>آیا تاسو میخواهید {{ dorm.dorm_name }} حذف کنید؟</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لغو</button>
+                                    <form action="{% url 'delete_dorm' dorm.pk %}" method="POST" style="display:inline;">
+                                        {% csrf_token %}
+                                        <button type="submit" class="btn btn-danger">حذف</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="text-center text-muted py-4">خوابونه شتون نلري</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
