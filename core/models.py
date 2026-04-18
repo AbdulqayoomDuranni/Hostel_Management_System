@@ -27,11 +27,11 @@ class Faculty(models.Model):
 
 class Department(models.Model):
     faculty = models.ForeignKey(Faculty, on_delete=models.CASCADE, related_name='departments')
-    department_name = models.CharField(max_length=100, verbose_name='د برخې نوم')
+    department_name = models.CharField(max_length=100, verbose_name='د څانګي نوم')
     
     class Meta:
-        verbose_name = 'برخه'
-        verbose_name_plural = 'برخې'
+        verbose_name = 'څانګه'
+        verbose_name_plural = 'څانګي'
         ordering = ['department_name']
         unique_together = ['faculty', 'department_name']
     
@@ -39,11 +39,11 @@ class Department(models.Model):
         return f"{self.faculty.faculty_name} - {self.department_name}"
 
 class Dorm(models.Model):
-    dorm_name = models.CharField(max_length=100, unique=True, verbose_name='د خواب نوم')
+    dorm_name = models.CharField(max_length=100, unique=True, verbose_name='د منرل نوم')
     
     class Meta:
-        verbose_name = 'خواب'
-        verbose_name_plural = 'خوابونه'
+        verbose_name = 'منزل'
+        verbose_name_plural = 'منزلونه'
         ordering = ['dorm_name']
     
     def __str__(self):
@@ -79,7 +79,7 @@ class Student(models.Model):
     faculty = models.ForeignKey(Faculty, on_delete=models.PROTECT, related_name='students')
     department = models.ForeignKey(Department, on_delete=models.PROTECT, related_name='students')
     class_level = models.CharField(max_length=20, verbose_name='کلاس')
-    percentage = models.FloatField(verbose_name="له څه حد څخه")
+    percentage = models.FloatField(verbose_name=" فیصدي ")
     dorm = models.ForeignKey(Dorm, on_delete=models.SET_NULL, null=True, blank=True, related_name='students')
     room = models.ForeignKey(Room, on_delete=models.SET_NULL, null=True, blank=True, related_name='students')
     photo = models.ImageField(
@@ -121,3 +121,5 @@ class Student(models.Model):
             if not self.pk:
                 raise ValidationError(f"اطاق {self.room.room_number} ډک دی!")
         super().save(*args, **kwargs)
+
+

@@ -13,8 +13,8 @@ class StudentForm(forms.ModelForm):
             'district': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'ولسوالۍ'}),
             'faculty': forms.Select(attrs={'class': 'form-select', 'id': 'id_faculty'}),
             'department': forms.Select(attrs={'class': 'form-select', 'id': 'id_department'}),
-            'class_level': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'کلاس'}),
-            'percentage': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'له څه حد څخه'}),
+            'class_level': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'صنف'}),
+            'percentage': forms.NumberInput(attrs={'class': 'form-control', 'placeholder': 'فیصدي'}),
             'dorm': forms.Select(attrs={'class': 'form-select', 'id': 'id_dorm'}),
             'room': forms.Select(attrs={'class': 'form-select', 'id': 'id_room'}),
             'photo': forms.FileInput(attrs={'class': 'form-control', 'accept': 'image/jpeg,image/png'}),
@@ -37,7 +37,7 @@ class StudentForm(forms.ModelForm):
         room = cleaned_data.get('room')
         if room and room.is_full:
             if not self.instance.pk:
-                raise ValidationError(f"اطاق {room.room_number} ډک دی!")
+                raise ValidationError(f"اطاق {room.room_number} ډک دی")
         return cleaned_data
 
 class FacultyForm(forms.ModelForm):
@@ -54,7 +54,7 @@ class DepartmentForm(forms.ModelForm):
         fields = ['faculty', 'department_name']
         widgets = {
             'faculty': forms.Select(attrs={'class': 'form-select'}),
-            'department_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'د برخې نوم'}),
+            'department_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'د څانګي نوم'}),
         }
 
 class DormForm(forms.ModelForm):
@@ -62,7 +62,7 @@ class DormForm(forms.ModelForm):
         model = Dorm
         fields = ['dorm_name']
         widgets = {
-            'dorm_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'د خواب نوم'}),
+            'dorm_name': forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'د منرل نوم'}),
         }
 
 class RoomForm(forms.ModelForm):

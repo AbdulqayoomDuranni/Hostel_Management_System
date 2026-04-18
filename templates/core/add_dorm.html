@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}خواب اضافه کړئ{% endblock %}
+{% block title %}منزل اضافه کړئ{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2><i class="bi bi-plus-circle"></i> خواب اضافه کړئ</h2>
+    <h2><i class="bi bi-plus-circle"></i> منزل اضافه کړئ</h2>
 </div>
 
 <div class="card">
@@ -12,7 +12,7 @@
         <form method="POST" class="row g-3">
             {% csrf_token %}
             <div class="col-md-6">
-                <label class="form-label">د خواب نوم</label>
+                <label class="form-label">د منزل نوم</label>
                 {{ form.dorm_name }}
             </div>
             <div class="col-12">

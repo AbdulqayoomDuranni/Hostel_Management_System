@@ -18,11 +18,11 @@
                     <tr>
                         <th>#</th>
                         <th>د اطاق نمبر</th>
-                        <th>خواب</th>
+                        <th>منزل</th>
                         <th>ظرفیت</th>
                         <th>زده کوونکي</th>
                         <th>وضعیت</th>
-                        <th>操作</th>
+                        <th>حذف</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -35,9 +35,9 @@
                         <td>{{ room.student_count }}</td>
                         <td>
                             {% if room.is_full %}
-                            <span class="room-full">ډک</span>
+                            <span class="room-full"> ډک دي</span>
                             {% else %}
-                            <span class="room-available">شته</span>
+                            <span class="room-available"> څاي شته</span>
                             {% endif %}
                         </td>
                         <td>
@@ -54,10 +54,10 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>آیا تاسو میخواهید اطاق {{ room.room_number }} حذف کنید؟</p>
+                                    <p>آیا تاسو غواړۍ  {{ room.room_number }} حذف یی کړه</p>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لغو</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لغو یی کړه</button>
                                     <form action="{% url 'delete_room' room.pk %}" method="POST" style="display:inline;">
                                         {% csrf_token %}
                                         <button type="submit" class="btn btn-danger">حذف</button>

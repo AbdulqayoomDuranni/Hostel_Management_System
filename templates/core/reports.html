@@ -23,7 +23,7 @@
             </div>
             <div class="col-md-3">
                 <select name="dorm" class="form-select">
-                    <option value="">ټول خوابونه</option>
+                    <option value="">ټول منزلونه</option>
                     {% for dorm in dorms %}
                     <option value="{{ dorm.id }}">{{ dorm.dorm_name }}</option>
                     {% endfor %}
@@ -31,7 +31,7 @@
             </div>
             <div class="col-md-3">
                 <select name="year" class="form-select">
-                    <option value="">ټول کالونه</option>
+                    <option value="">ټول کلونه</option>
                     {% for year in years %}
                     <option value="{{ year }}">{{ year }}</option>
                     {% endfor %}
@@ -56,8 +56,8 @@
                         <th>د پلار نوم</th>
                         <th>ولایت</th>
                         <th>پوهنځی</th>
-                        <th>برخه</th>
-                        <th>خواب</th>
+                        <th>څانګه</th>
+                        <th>منزل</th>
                         <th>اطاق</th>
                         <th>د کارت نمبر</th>
                         <th>د داخلې کال</th>

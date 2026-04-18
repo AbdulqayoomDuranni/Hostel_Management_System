@@ -68,7 +68,7 @@
         <div class="id-card-header">
             <h4>کندهار پوهنتون</h4>
             <p>Kandahar University</p>
-            <p style="margin-top:5px;font-size:11px;">د خواب مدیریت سیستم</p>
+            <p style="margin-top:5px;font-size:11px;">د لیلی مدیریت سیستم</p>
         </div>
         
         <div class="id-card-body">
@@ -103,15 +103,15 @@
                 <span class="info-value">{{ student.faculty.faculty_name }}</span>
             </div>
             <div class="info-row">
-                <span class="info-label">برخه:</span>
+                <span class="info-label">څانګه:</span>
                 <span class="info-value">{{ student.department.department_name }}</span>
             </div>
             <div class="info-row">
-                <span class="info-label">کلاس:</span>
+                <span class="info-label">صنف:</span>
                 <span class="info-value">{{ student.class_level }}</span>
             </div>
             <div class="info-row">
-                <span class="info-label">خواب:</span>
+                <span class="info-label">منزل:</span>
                 <span class="info-value">{{ student.dorm.dorm_name|default:"-" }}</span>
             </div>
             <div class="info-row">
@@ -130,7 +130,7 @@
     </button>
     
     <a href="{% url 'student_list' %}" class="btn btn-secondary btn-print no-print">
-        <i class="bi bi-arrow-right"></i> بیرته
+        <i class="bi bi-arrow-right"></i> وتل
     </a>
 </body>
 </html>

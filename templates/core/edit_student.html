@@ -1,10 +1,10 @@
 {% extends 'base.html' %}
 
-{% block title %}زده کوونکی کنډل{% endblock %}
+{% block title %}زده کوونکی تغیرول{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2><i class="bi bi-pencil-square"></i> زده کوونکی کنډل</h2>
+    <h2><i class="bi bi-pencil-square"></i> زده کوونکی تغیرول</h2>
 </div>
 
 <div class="card">
@@ -38,22 +38,22 @@
             </div>
             
             <div class="col-md-6">
-                <label class="form-label">برخه</label>
+                <label class="form-label">څانګه</label>
                 {{ form.department }}
             </div>
             
             <div class="col-md-6">
-                <label class="form-label">کلاس</label>
+                <label class="form-label">صنف</label>
                 {{ form.class_level }}
             </div>
             
             <div class="col-md-6">
-                <label class="form-label">له څه حد څخه (%)</label>
+                <label class="form-label">  فیصدي(%)</label>
                 {{ form.percentage }}
             </div>
             
             <div class="col-md-6">
-                <label class="form-label">خواب</label>
+                <label class="form-label">منزل</label>
                 {{ form.dorm }}
             </div>
             
@@ -63,7 +63,7 @@
             </div>
             
             <div class="col-md-6">
-                <label class="form-label">تصویر (JPG/PNG, Max 200KB)</label>
+                <label class="form-label">تصویر (JPG/PNG )</label>
                 {{ form.photo }}
                 {% if student.photo %}
                 <img src="{{ student.photo.url }}" width="80" class="mt-2 rounded">
@@ -85,7 +85,7 @@
                     <i class="bi bi-save"></i> Update
                 </button>
                 <a href="{% url 'student_list' %}" class="btn btn-secondary">
-                    <i class="bi bi-arrow-right"></i> بیرته
+                    <i class="bi bi-arrow-right"></i> وتل
                 </a>
             </div>
         </form>

@@ -53,7 +53,7 @@
             </div>
             
             <div class="col-md-6">
-                <label class="form-label">برخه</label>
+                <label class="form-label">څانګه</label>
                 {{ form.department }}
                 {% if form.department.errors %}
                 <div class="text-danger">{{ form.department.errors }}</div>
@@ -61,7 +61,7 @@
             </div>
             
             <div class="col-md-6">
-                <label class="form-label">کلاس</label>
+                <label class="form-label">صنف</label>
                 {{ form.class_level }}
                 {% if form.class_level.errors %}
                 <div class="text-danger">{{ form.class_level.errors }}</div>
@@ -69,7 +69,7 @@
             </div>
             
             <div class="col-md-6">
-                <label class="form-label">له څه حد څخه (%)</label>
+                <label class="form-label">  فیصدي(%)</label>
                 {{ form.percentage }}
                 {% if form.percentage.errors %}
                 <div class="text-danger">{{ form.percentage.errors }}</div>
@@ -77,7 +77,7 @@
             </div>
             
             <div class="col-md-6">
-                <label class="form-label">خواب</label>
+                <label class="form-label">منزل</label>
                 {{ form.dorm }}
                 {% if form.dorm.errors %}
                 <div class="text-danger">{{ form.dorm.errors }}</div>
@@ -93,7 +93,7 @@
             </div>
             
             <div class="col-md-6">
-                <label class="form-label">تصویر (JPG/PNG, Max 200KB)</label>
+                <label class="form-label">عکس (JPG/PNG )</label>
                 {{ form.photo }}
                 {% if form.photo.errors %}
                 <div class="text-danger">{{ form.photo.errors }}</div>
@@ -109,7 +109,7 @@
             </div>
             
             <div class="col-md-6">
-                <label class="form-label">د داخلې کال</label>
+                <label class="form-label">داخلې کال</label>
                 {{ form.admission_year }}
                 {% if form.admission_year.errors %}
                 <div class="text-danger">{{ form.admission_year.errors }}</div>
@@ -121,7 +121,7 @@
                     <i class="bi bi-save"></i> Save
                 </button>
                 <a href="{% url 'student_list' %}" class="btn btn-secondary">
-                    <i class="bi bi-arrow-right"></i> بیرته
+                    <i class="bi bi-arrow-right"></i> وتل
                 </a>
             </div>
         </form>

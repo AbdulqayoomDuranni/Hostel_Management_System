@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}خوابونه{% endblock %}
+{% block title %}منزلونه{% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2><i class="bi bi-house-door"></i> خوابونه</h2>
+    <h2><i class="bi bi-house-door"></i> منزلونه</h2>
     <a href="{% url 'add_dorm' %}" class="btn btn-primary">
-        <i class="bi bi-plus-circle"></i> خواب اضافه کړئ
+        <i class="bi bi-plus-circle"></i> منزل اضافه کړئ
     </a>
 </div>
 
@@ -20,7 +20,7 @@
                         <th>د خواب نوم</th>
                         <th>زده کوونکي</th>
                         <th>اطاقونه</th>
-                        <th>操作</th>
+                        <th>حذف کول</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -44,7 +44,7 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>آیا تاسو میخواهید {{ dorm.dorm_name }} حذف کنید؟</p>
+                                    <p>آیا تاسو غواړۍ {{ dorm.dorm_name }} حذف کوي؟</p>
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لغو</button>
@@ -58,7 +58,7 @@
                     </div>
                     {% empty %}
                     <tr>
-                        <td colspan="5" class="text-center text-muted py-4">خوابونه شتون نلري</td>
+                        <td colspan="5" class="text-center text-muted py-4">منزلونه شتون نلري</td>
                     </tr>
                     {% endfor %}
                 </tbody>

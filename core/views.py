@@ -83,7 +83,7 @@ def add_student(request):
         form = StudentForm(request.POST, request.FILES)
         if form.is_valid():
             student = form.save()
-            messages.success(request, 'زده کوونکی په بریاله توګه اضافه شو!')
+            messages.success(request, 'زده کوونکي اضافه شو!')
             cache.delete('dashboard_stats')
             return redirect('student_list')
     else:
@@ -100,7 +100,7 @@ def edit_student(request, pk):
         form = StudentForm(request.POST, request.FILES, instance=student)
         if form.is_valid():
             form.save()
-            messages.success(request, 'زده کوونکی په بریاله توګه ک_updateو شو!')
+            messages.success(request, 'زده کوونکي تغیر شو!')
             cache.delete('dashboard_stats')
             return redirect('student_list')
     else:
@@ -126,7 +126,7 @@ def edit_student(request, pk):
 def delete_student(request, pk):
     student = get_object_or_404(Student, pk=pk)
     student.delete()
-    messages.success(request, 'زده کوونکی له مینځه واړل شو!')
+    messages.success(request, 'زده کوونکی حذف شو!')
     cache.delete('dashboard_stats')
     return redirect('student_list')
 
@@ -221,7 +221,7 @@ def export_csv(request):
     response['Content-Disposition'] = 'attachment; filename="students.csv"'
     
     writer = csv.writer(response)
-    writer.writerow(['نوم', 'د پلار نوم', 'ولایت', 'ولسوالۍ', 'پوهنځی', 'برخه', 'کلاس', 'له څه حد څخه', 'خواب', 'اطاق', 'د کارت نمبر', 'د داخلې کال'])
+    writer.writerow(['نوم', 'د پلار نوم', 'ولایت', 'ولسوالۍ', 'پوهنځی', 'څانګه', 'کلاس', ' فیصدي', 'منرل', 'اطاق', 'د کارت نمبر', 'د داخلې کال'])
     
     for student in students:
         writer.writerow([
@@ -251,7 +251,7 @@ def add_faculty(request):
         form = FacultyForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'پوهنځی په بریاله توګه اضافه شو!')
+            messages.success(request, 'پوهنځی اضافه شوه')
             return redirect('faculty_list')
     else:
         form = FacultyForm()
@@ -262,7 +262,7 @@ def add_faculty(request):
 def delete_faculty(request, pk):
     faculty = get_object_or_404(Faculty, pk=pk)
     faculty.delete()
-    messages.success(request, 'پوهنځی له مینځه واړل شو!')
+    messages.success(request, 'پوهنځی حذف شوه')
     return redirect('faculty_list')
 
 def department_list(request):
@@ -275,7 +275,7 @@ def add_department(request):
         form = DepartmentForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'برخه په بریاله توګه اضافه شو!')
+            messages.success(request, 'څانګه اضافه شوه')
             return redirect('department_list')
     else:
         form = DepartmentForm()
@@ -287,7 +287,7 @@ def add_department(request):
 def delete_department(request, pk):
     department = get_object_or_404(Department, pk=pk)
     department.delete()
-    messages.success(request, 'برخه له مینځه واړل شو!')
+    messages.success(request, 'څانګه حذف شوه')
     return redirect('department_list')
 
 def dorm_list(request):
@@ -300,7 +300,7 @@ def add_dorm(request):
         form = DormForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'خواب په بریاله توګه اضافه شو!')
+            messages.success(request, 'منزل اضافه شوو')
             return redirect('dorm_list')
     else:
         form = DormForm()
@@ -311,7 +311,7 @@ def add_dorm(request):
 def delete_dorm(request, pk):
     dorm = get_object_or_404(Dorm, pk=pk)
     dorm.delete()
-    messages.success(request, 'خواب له مینځه واړل شو!')
+    messages.success(request, 'منزل حذف شوو')
     return redirect('dorm_list')
 
 def room_list(request):
@@ -324,7 +324,7 @@ def add_room(request):
         form = RoomForm(request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, 'اطاق په بریاله توګه اضافه شو!')
+            messages.success(request, 'اطاق اضافه شوو')
             return redirect('room_list')
     else:
         form = RoomForm()
@@ -336,5 +336,5 @@ def add_room(request):
 def delete_room(request, pk):
     room = get_object_or_404(Room, pk=pk)
     room.delete()
-    messages.success(request, 'اطاق له مینځه واړل شو!')
+    messages.success(request, 'اطاق حذف شوو')
     return redirect('room_list')

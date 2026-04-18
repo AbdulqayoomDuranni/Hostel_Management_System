@@ -28,7 +28,7 @@
             </div>
             <div class="col-md-2">
                 <select name="dorm" class="form-select">
-                    <option value="">ټول خوابونه</option>
+                    <option value="">ټول منزلونه</option>
                     {% for dorm in dorms %}
                     <option value="{{ dorm.id }}" {% if request.GET.dorm == dorm.id|stringformat:"s" %}selected{% endif %}>
                         {{ dorm.dorm_name }}
@@ -38,7 +38,7 @@
             </div>
             <div class="col-md-2">
                 <select name="year" class="form-select">
-                    <option value="">ټول کالونه</option>
+                    <option value="">ټول کلونه</option>
                     {% for year in years %}
                     <option value="{{ year }}" {% if request.GET.year == year %}selected{% endif %}>
                         {{ year }}
@@ -69,11 +69,11 @@
                         <th>نوم</th>
                         <th>د پلار نوم</th>
                         <th>پوهنځی</th>
-                        <th>برخه</th>
-                        <th>خواب</th>
+                        <th>څانګه</th>
+                        <th>منزل</th>
                         <th>اطاق</th>
                         <th>د کارت نمبر</th>
-                        <th>操作</th>
+                        <th>عملیات</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -116,10 +116,10 @@
                                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                                 </div>
                                 <div class="modal-body">
-                                    <p>آیا تاسو میخواهید {{ student.name }} حذف کنید؟</p>
+                                    <p>آیا تاسو غواړۍ {{ student.name }} حذف یی کړئ</p>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لغو</button>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">لغو یی کړي</button>
                                     <form action="{% url 'delete_student' student.pk %}" method="POST" style="display:inline;">
                                         {% csrf_token %}
                                         <button type="submit" class="btn btn-danger">حذف</button>
@@ -159,7 +159,7 @@
                     <a class="page-link" href="?page={{ page_obj.next_page_number }}">بله</a>
                 </li>
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}"> послед </a>
+                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}"> بله </a>
                 </li>
                 {% endif %}
             </ul>
@@ -192,7 +192,7 @@ $(document).ready(function() {
                 $('#id_room').empty();
                 $('#id_room').append('<option value="">Select Room</option>');
                 $.each(data, function(index, room) {
-                    var status = room.is_full ? ' (ډک)' : ' (' + room.current_count + '/' + room.capacity + ')';
+                    var status = room.is_full ? ' (ډک دي)' : ' (' + room.current_count + '/' + room.capacity + ')';
                     $('#id_room').append('<option value="' + room.id + '">' + room.room_number + status + '</option>');
                 });
             });
