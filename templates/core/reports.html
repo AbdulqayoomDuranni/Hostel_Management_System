@@ -5,7 +5,8 @@
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
     <h2><i class="bi bi-file-earmark-text"></i> راپورونه</h2>
-    <a href="{% url 'export_csv' %}?faculty={{ request.GET.faculty }}&dorm={{ request.GET.dorm }}&year={{ request.GET.year }}" class="btn btn-success">
+
+    <a href="{% url 'export_csv' %}?faculty={{ request.GET.faculty|default_if_none:'' }}&dorm={{ request.GET.dorm|default_if_none:'' }}&year={{ request.GET.year|default_if_none:'' }}" class="btn btn-success">
         <i class="bi bi-file-earmark-arrow-down"></i> Export CSV
     </a>
 </div>
@@ -13,42 +14,62 @@
 <div class="card mb-4">
     <div class="card-body">
         <form method="GET" class="row g-3">
+
+            <!-- FACULTY FILTER -->
             <div class="col-md-3">
                 <select name="faculty" class="form-select">
                     <option value="">ټول پوهنځي</option>
                     {% for faculty in faculties %}
-                    <option value="{{ faculty.id }}">{{ faculty.faculty_name }}</option>
+                    <option value="{{ faculty.id }}"
+                        {% if request.GET.faculty == faculty.id|stringformat:"s" %}selected{% endif %}>
+                        {{ faculty.faculty_name }}
+                    </option>
                     {% endfor %}
                 </select>
             </div>
+
+            <!-- DORM FILTER -->
             <div class="col-md-3">
                 <select name="dorm" class="form-select">
                     <option value="">ټول منزلونه</option>
                     {% for dorm in dorms %}
-                    <option value="{{ dorm.id }}">{{ dorm.dorm_name }}</option>
+                    <option value="{{ dorm.id }}"
+                        {% if request.GET.dorm == dorm.id|stringformat:"s" %}selected{% endif %}>
+                        {{ dorm.dorm_name }}
+                    </option>
                     {% endfor %}
                 </select>
             </div>
+
+            <!-- YEAR FILTER -->
             <div class="col-md-3">
                 <select name="year" class="form-select">
                     <option value="">ټول کلونه</option>
                     {% for year in years %}
-                    <option value="{{ year }}">{{ year }}</option>
+                    <option value="{{ year }}"
+                        {% if request.GET.year == year|stringformat:"s" %}selected{% endif %}>
+                        {{ year }}
+                    </option>
                     {% endfor %}
                 </select>
             </div>
+
+            <!-- BUTTON -->
             <div class="col-md-3">
                 <button type="submit" class="btn btn-primary">
                     <i class="bi bi-filter"></i> Filter
                 </button>
             </div>
+
         </form>
     </div>
 </div>
 
+<!-- TABLE -->
 <div class="card">
     <div class="card-body p-0">
         <div class="table-responsive">
+
             <table class="table table-hover mb-0">
                 <thead class="table-success">
                     <tr>
@@ -63,6 +84,7 @@
                         <th>د داخلې کال</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     {% for student in page_obj %}
                     <tr>
@@ -78,41 +100,66 @@
                     </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="9" class="text-center text-muted py-4">زده کوونکي شتون نلري</td>
+                        <td colspan="9" class="text-center text-muted py-4">
+                            زده کوونکي شتون نلري
+                        </td>
                     </tr>
                     {% endfor %}
                 </tbody>
+
             </table>
+
         </div>
     </div>
+
+    <!-- PAGINATION -->
     {% if page_obj.has_other_pages %}
     <div class="card-footer">
         <nav>
             <ul class="pagination justify-content-center mb-0">
+
                 {% if page_obj.has_previous %}
                 <li class="page-item">
-                    <a class="page-link" href="?page=1&faculty={{ request.GET.faculty }}&dorm={{ request.GET.dorm }}&year={{ request.GET.year }}">First</a>
+                    <a class="page-link"
+                       href="?page=1&faculty={{ request.GET.faculty }}&dorm={{ request.GET.dorm }}&year={{ request.GET.year }}">
+                        First
+                    </a>
                 </li>
+
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.previous_page_number }}&faculty={{ request.GET.faculty }}&dorm={{ request.GET.dorm }}&year={{ request.GET.year }}">Previous</a>
+                    <a class="page-link"
+                       href="?page={{ page_obj.previous_page_number }}&faculty={{ request.GET.faculty }}&dorm={{ request.GET.dorm }}&year={{ request.GET.year }}">
+                        Previous
+                    </a>
                 </li>
                 {% endif %}
-                
+
                 <li class="page-item active">
-                    <span class="page-link">{{ page_obj.number }} / {{ page_obj.paginator.num_pages }}</span>
+                    <span class="page-link">
+                        {{ page_obj.number }} / {{ page_obj.paginator.num_pages }}
+                    </span>
                 </li>
-                
+
                 {% if page_obj.has_next %}
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.next_page_number }}&faculty={{ request.GET.faculty }}&dorm={{ request.GET.dorm }}&year={{ request.GET.year }}">Next</a>
+                    <a class="page-link"
+                       href="?page={{ page_obj.next_page_number }}&faculty={{ request.GET.faculty }}&dorm={{ request.GET.dorm }}&year={{ request.GET.year }}">
+                        Next
+                    </a>
                 </li>
+
                 <li class="page-item">
-                    <a class="page-link" href="?page={{ page_obj.paginator.num_pages }}&faculty={{ request.GET.faculty }}&dorm={{ request.GET.dorm }}&year={{ request.GET.year }}">Last</a>
+                    <a class="page-link"
+                       href="?page={{ page_obj.paginator.num_pages }}&faculty={{ request.GET.faculty }}&dorm={{ request.GET.dorm }}&year={{ request.GET.year }}">
+                        Last
+                    </a>
                 </li>
                 {% endif %}
+
             </ul>
         </nav>
     </div>
     {% endif %}
 </div>
+
 {% endblock %}

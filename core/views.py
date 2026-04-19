@@ -219,7 +219,10 @@ def export_csv(request):
     
     response = HttpResponse(content_type='text/csv; charset=utf-8')
     response['Content-Disposition'] = 'attachment; filename="students.csv"'
-    
+
+    # ✅ ONLY FIX (UTF-8 BOM for Excel)
+    response.write('\ufeff')
+
     writer = csv.writer(response)
     writer.writerow(['نوم', 'د پلار نوم', 'ولایت', 'ولسوالۍ', 'پوهنځی', 'څانګه', 'کلاس', ' فیصدي', 'منرل', 'اطاق', 'د کارت نمبر', 'د داخلې کال'])
     
