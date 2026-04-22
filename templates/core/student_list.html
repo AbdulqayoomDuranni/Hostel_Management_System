@@ -1,12 +1,12 @@
 {% extends 'base.html' %}
 
-{% block title %}زده کوونکي{% endblock %}
+{% block title %}محصلین {% endblock %}
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2><i class="bi bi-people"></i> زده کوونکي</h2>
+    <h2><i class="bi bi-people"></i> محصلین </h2>
     <a href="{% url 'add_student' %}" class="btn btn-primary">
-        <i class="bi bi-plus-circle"></i> زده کوونکی اضافه کړئ
+        <i class="bi bi-plus-circle"></i> محصل اضافه کړئ
     </a>
 </div>
 
@@ -130,7 +130,7 @@
                     </div>
                     {% empty %}
                     <tr>
-                        <td colspan="10" class="text-center text-muted py-4">زده کوونکي شتون نلري</td>
+                        <td colspan="10" class="text-center text-muted py-4">محصلین شتون نلري</td>
                     </tr>
                     {% endfor %}
                 </tbody>

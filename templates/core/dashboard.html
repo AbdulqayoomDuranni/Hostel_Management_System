@@ -4,7 +4,8 @@
 
 {% block content %}
 <div class="d-flex justify-content-between align-items-center mb-4">
-    <h2><i class="bi bi-speedometer2"></i>Dashboard</h2>
+    <h2> عمومي معلومات</h2>
+<!--<i class="bi bi-speedometer2"></i>-->
 </div>
 
 <div class="row mb-4">
@@ -13,7 +14,7 @@
             <div class="card-body">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h6 class="mb-0">ټول زده کوونکي</h6>
+                        <h6 class="mb-0">ټول محصلین </h6>
                         <h2 class="mb-0">{{ stats.total_students }}</h2>
                     </div>
                     <i class="bi bi-people fs-1 opacity-50"></i>
@@ -66,7 +67,7 @@
     <div class="col-md-6 mb-4">
         <div class="card">
             <div class="card-header bg-primary text-white">
-                <h5 class="mb-0"><i class="bi bi-people"></i> نوی زده کوونکي</h5>
+                <h5 class="mb-0"><i class="bi bi-people"></i> تازه ثبت سوی محصلین  </h5>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -87,7 +88,7 @@
                             </tr>
                             {% empty %}
                             <tr>
-                                <td colspan="3" class="text-center text-muted">زده کوونکي شتون نلري</td>
+                                <td colspan="3" class="text-center text-muted"> محصلین شتون نلري</td>
                             </tr>
                             {% endfor %}
                         </tbody>
@@ -100,7 +101,7 @@
     <div class="col-md-6 mb-4">
         <div class="card">
             <div class="card-header bg-success text-white">
-                <h5 class="mb-0"><i class="bi bi-building"></i> د پوهنځی زده کوونکي</h5>
+                <h5 class="mb-0"><i class="bi bi-building"></i> د پوهنځی  محصلین</h5>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -108,7 +109,7 @@
                         <thead class="table-light">
                             <tr>
                                 <th>پوهنځی</th>
-                                <th>زده کوونکي</th>
+                                <th>محصلین </th>
                             </tr>
                         </thead>
                         <tbody>
@@ -134,7 +135,7 @@
     <div class="col-md-12">
         <div class="card">
             <div class="card-header bg-warning text-dark">
-                <h5 class="mb-0"><i class="bi bi-house-door"></i> د منزل زده کوونکي</h5>
+                <h5 class="mb-0"><i class="bi bi-house-door"></i> د منزل  محصلین</h5>
             </div>
             <div class="card-body p-0">
                 <div class="table-responsive">
@@ -142,7 +143,7 @@
                         <thead class="table-light">
                             <tr>
                                 <th>منزل</th>
-                                <th>زده کوونکي</th>
+                                <th>محصلین </th>
                             </tr>
                         </thead>
                         <tbody>

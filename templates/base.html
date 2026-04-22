@@ -34,7 +34,7 @@
                         <i class="bi bi-speedometer2"></i>Dashboard
                     </a>
                     <a href="{% url 'student_list' %}" class="{% if 'student' in request.resolver_match.view_name %}active{% endif %}">
-                        <i class="bi bi-people"></i>زده کوونکي
+                        <i class="bi bi-people"></i>محصلین 
                     </a>
                     <a href="{% url 'reports' %}" class="{% if request.resolver_match.view_name == 'reports' %}active{% endif %}">
                         <i class="bi bi-file-earmark-text"></i>راپورونه

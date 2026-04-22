@@ -101,7 +101,7 @@
                     {% empty %}
                     <tr>
                         <td colspan="9" class="text-center text-muted py-4">
-                            زده کوونکي شتون نلري
+                            محصلین شتون نلري
                         </td>
                     </tr>
                     {% endfor %}
@@ -121,14 +121,14 @@
                 {% if page_obj.has_previous %}
                 <li class="page-item">
                     <a class="page-link"
-                       href="?page=1&faculty={{ request.GET.faculty }}&dorm={{ request.GET.dorm }}&year={{ request.GET.year }}">
+                    href="?page=1&faculty={{ request.GET.faculty }}&dorm={{ request.GET.dorm }}&year={{ request.GET.year }}">
                         First
                     </a>
                 </li>
 
                 <li class="page-item">
                     <a class="page-link"
-                       href="?page={{ page_obj.previous_page_number }}&faculty={{ request.GET.faculty }}&dorm={{ request.GET.dorm }}&year={{ request.GET.year }}">
+                    href="?page={{ page_obj.previous_page_number }}&faculty={{ request.GET.faculty }}&dorm={{ request.GET.dorm }}&year={{ request.GET.year }}">
                         Previous
                     </a>
                 </li>
@@ -143,14 +143,14 @@
                 {% if page_obj.has_next %}
                 <li class="page-item">
                     <a class="page-link"
-                       href="?page={{ page_obj.next_page_number }}&faculty={{ request.GET.faculty }}&dorm={{ request.GET.dorm }}&year={{ request.GET.year }}">
+                    href="?page={{ page_obj.next_page_number }}&faculty={{ request.GET.faculty }}&dorm={{ request.GET.dorm }}&year={{ request.GET.year }}">
                         Next
                     </a>
                 </li>
 
                 <li class="page-item">
                     <a class="page-link"
-                       href="?page={{ page_obj.paginator.num_pages }}&faculty={{ request.GET.faculty }}&dorm={{ request.GET.dorm }}&year={{ request.GET.year }}">
+                    href="?page={{ page_obj.paginator.num_pages }}&faculty={{ request.GET.faculty }}&dorm={{ request.GET.dorm }}&year={{ request.GET.year }}">
                         Last
                     </a>
                 </li>
