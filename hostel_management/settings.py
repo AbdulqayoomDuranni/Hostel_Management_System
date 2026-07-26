@@ -60,7 +60,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'hostel_db',
         'USER': 'hostel_user',
-        'PASSWORD': 'pathan1234',  # هغه password چې تاسو create کړی دی
+        'PASSWORD': 'pathan123',  # هغه password چې تاسو create کړی دی
         'HOST': 'localhost',
         'PORT': '5432',
     }

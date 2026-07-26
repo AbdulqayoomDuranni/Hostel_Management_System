@@ -1,17 +1,9 @@
-# Python
+venv/
 __pycache__/
 *.pyc
-
-# Django
+.env
 db.sqlite3
 media/
 staticfiles/
-
-# Environment
-.env
-
-# Backup
-backup.json
-
-# Data files
 *.xlsx
+backup.json
