@@ -45,7 +45,7 @@ This system is designed to help universities or institutions manage hostel activ
 ```
 Hostel_Project_Complete/
 │── manage.py
-│── db.sqlite3
+│── db.sql ---PostQray SQL
 │── requirements.txt
 │
 ├── hostel_app/

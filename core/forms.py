@@ -33,7 +33,7 @@ class StudentForm(forms.ModelForm):
         if photo:
             # 10MB LIMIT
             if photo.size > 10 * 1024 * 1024:
-                raise ValidationError('تصویر باید تر 10MB پورې وي!')
+                raise ValidationError(' image get than 10 MB ')
 
             # FILE TYPE CHECK
             ext = photo.name.split('.')[-1].lower()

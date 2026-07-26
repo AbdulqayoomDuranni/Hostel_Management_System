@@ -220,7 +220,7 @@ def export_csv(request):
     response = HttpResponse(content_type='text/csv; charset=utf-8')
     response['Content-Disposition'] = 'attachment; filename="students.csv"'
 
-    # ✅ ONLY FIX (UTF-8 BOM for Excel)
+    # ONLY FIX (UTF-8 BOM for Excel)
     response.write('\ufeff')
 
     writer = csv.writer(response)
@@ -341,3 +341,31 @@ def delete_room(request, pk):
     room.delete()
     messages.success(request, 'اطاق حذف شوو')
     return redirect('room_list')
+
+
+from django.core import serializers
+from django.apps import apps
+from django.contrib.admin.views.decorators import staff_member_required
+from datetime import datetime
+
+@staff_member_required
+def backup_database(request):
+    all_models = apps.get_models()
+    data = []
+
+    for model in all_models:
+        try:
+            queryset = model.objects.all()
+            json_data = serializers.serialize("json", queryset)
+            data.append(json_data[1:-1])  # remove [ ]
+        except:
+            pass
+
+    final_data = '[' + ','.join([d for d in data if d]) + ']'
+
+    response = HttpResponse(final_data, content_type='application/json')
+    
+    filename = f"backup_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json"
+    response['Content-Disposition'] = f'attachment; filename="{filename}"'
+
+    return response

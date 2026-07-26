@@ -6,7 +6,7 @@ import os
 def validate_image_size(image):
     limit = 200 * 1024
     if image.size > limit:
-        raise ValidationError('تصویر сли نه تر ۲۰۰ کیلوبایت غواړي!')
+        raise ValidationError('Enter Your image for in pleace!')
 
 def validate_image_extension(value):
     valid_extensions = ['jpg', 'jpeg', 'png']
